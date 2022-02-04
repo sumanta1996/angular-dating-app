@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/common/user';
 import { UserImages } from 'src/app/common/user-images';
 import { ConstantData } from 'src/app/constants/constantFile';
@@ -14,15 +15,41 @@ export class MyProfileComponent implements OnInit {
   userImagesList: UserImages[] = new Array();
   username!: any;
   loggedinUser!: User;
+  isOtherUser!: boolean;
 
-  constructor(private myProfile: MyprofileService, private regService: RegistrationService) { }
+  constructor(private myProfile: MyprofileService, private regService: RegistrationService,
+              private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(() => {
+      if(history.state.user) {
+        //Other user profiles
+        this.isOtherUser = true;
+        this.loggedinUser = history.state.user;
+        this.userImagesList = history.state.user.userImages;
+        this.updateStateCode();
+      }else {
+        //Loggedin User
+        this.fetchLoggedInUserDetails();
+      }
+    });
+    
+  }
+
+  fetchLoggedInUserDetails() {
+    this.isOtherUser = false;
     this.username = sessionStorage.getItem('username');
-    this.fetchAllUserImages();
+    //this.fetchAllUserImages();
     this.regService.basicUserDetailsObj.subscribe(data => {
       this.loggedinUser = data;
-      let stateCode = this.loggedinUser.livingIn;
+      this.updateStateCode();
+      console.log(data);
+      this.userImagesList = data.userImages;
+    });
+  }
+
+  updateStateCode() {
+    let stateCode = this.loggedinUser.livingIn;
       if(stateCode) {
         for(let i=0;i<ConstantData.states.length;i++) {
           if(stateCode === ConstantData.states[i].code) {
@@ -30,10 +57,9 @@ export class MyProfileComponent implements OnInit {
           }
         }
       }
-    });
   }
 
-  fetchAllUserImages() {
+  /* fetchAllUserImages() {
     if (this.username) {
       this.myProfile.getAllUserImages(this.username).subscribe(data => {
         data.map((each, index) => {
@@ -44,6 +70,6 @@ export class MyProfileComponent implements OnInit {
         })
       });
     }
-  }
+  } */
 
 }

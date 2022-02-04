@@ -17,12 +17,16 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { SideViewComponent } from './components/side-view/side-view.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ModalMatchedUserComponent } from './components/modal-matched-user/modal-matched-user.component';
 
 const routes: Routes = [
   {path: 'users', component: UsersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'my-profile', component: MyProfileComponent},
+  {path: 'profile', component: MyProfileComponent},
   {path: 'edit-profile', component: EditProfileComponent},
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
@@ -36,7 +40,9 @@ const routes: Routes = [
     LoginComponent,
     RegistrationComponent,
     MyProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    SideViewComponent,
+    ModalMatchedUserComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -47,7 +53,8 @@ const routes: Routes = [
     NgbModule,
     DragDropModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatTabsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

@@ -37,7 +37,12 @@ export class LoginComponent implements OnInit {
                                           this.loginForm.controls['password'].value).subscribe(
         data => {
           console.log("Response recieved", data);
-          this.route.navigateByUrl('/users');
+          if(data.basicUserDetails.userImages && data.basicUserDetails.userImages.length>0) {
+            this.route.navigateByUrl('/users');
+          }else {
+            //New User
+            this.route.navigateByUrl('/edit-profile')
+          }
         },
         error => {
           console.log("Exception Occured", error);

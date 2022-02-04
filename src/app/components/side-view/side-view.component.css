@@ -1,0 +1,51 @@
+.side-container {
+    position: fixed;
+    height: 100%;
+    width: 22%;
+    left: 0;
+    top: 0;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    padding-top: 20px;
+}
+
+.icon-container {
+    cursor: pointer;
+}
+
+.card-container {
+    width: 100px;
+    height: 150px;
+    border-radius: 20px;
+    margin: 10px;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s ease-out;
+    cursor: pointer;
+}
+
+.matches-container {
+    /* display: flex;
+    flex-direction: row; */
+    display: grid;
+    grid-template-columns: repeat(3, 110px);
+    grid-gap: 1rem;
+}
+
+.name-container {
+    position: absolute;
+    color: white;
+    font-weight: bolder;
+    bottom: 2px;
+    left: 14px;
+}
+
+.card-container:hover {
+    width: 110px;
+    height: 160px;
+}

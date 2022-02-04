@@ -3,7 +3,7 @@
         <div cdkDropList class="image-container" (cdkDropListDropped)="drop($event)"> 
             <div *ngFor="let user of userImagesList; let i = index" class="image-block" cdkDrag [cdkDragDisabled]="!user"
             [ngStyle]="user? {'cursor': 'grab'}: {}">
-                <img *ngIf="user" [src]="user.processedImage" class="image-style">
+                <img *ngIf="user" [src]="'data:image/jpeg;base64,'+user.imageData" class="image-style">
                 <label class="file-upload-css"><img src="assets/add.png" width="100%" height="100%" />
                     <input type="file" (change)="onFileChanged($event, i)" />
                 </label>
@@ -12,7 +12,7 @@
         <!-- (ngSubmit)="registerUser()" -->
         <form [formGroup]="editForm" >
             <div class="form-group">
-                <label for="selfSummary">ABOUT {{loggedinUser.firstName | uppercase}}</label>
+                <label for="selfSummary">ABOUT {{loggedinUser?.firstName | uppercase}}</label>
                 <textarea type="text" class="form-control" id="selfSummary" placeholder="Tell us something about you..."
                     formControlName="selfSummary"></textarea>
 

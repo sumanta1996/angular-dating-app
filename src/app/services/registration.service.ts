@@ -1,10 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginUser } from '../common/login-user';
 import { User } from '../common/user';
+import { UserImages } from '../common/user-images';
 
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -17,7 +18,7 @@ export class RegistrationService {
   private fetchLoggedinUserImage = "http://localhost:8080/users/fetchFirstImage";
   private fetchBasicDetailsWithImage = "http://localhost:8080/users/fetchBasicUserDetails";
 
-  basicUserDetailsObj: Subject<User> = new BehaviorSubject<User>(new User());
+  basicUserDetailsObj: Subject<User> = new ReplaySubject<User>();
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
@@ -31,10 +32,19 @@ export class RegistrationService {
           console.log("Token---  " + tokenStr);
           sessionStorage.setItem("token", tokenStr);
           let userObj = userData.basicUserDetails;
-          userObj.imageData = 'data:image/jpeg;base64,'+userData.imageData;
+          userObj.userImages = this.processImageData(userObj.userImages);
           this.basicUserDetailsObj.next(userObj);
           return userData;
         }));
+  }
+
+  processImageData(userImages: UserImages[]) {
+    userImages.sort((a,b) => (a.ordering > b.ordering) ? 1 : ((b.ordering > a.ordering) ? -1 : 0));
+    /* for(let i=0;i<userImages.length;i++) {
+      userImages[i].imageData = 'data:image/jpeg;base64,'+userImages[i].imageData;
+    } */
+
+    return userImages;
   }
 
   public registerUser(regUser: LoginUser): Observable<any> {
@@ -78,7 +88,7 @@ export class RegistrationService {
       map(data => {
         console.log(data);
         let userObj = data.basicUserDetails;
-        userObj.imageData = 'data:image/jpeg;base64,'+data.imageData;
+        userObj.userImages = this.processImageData(userObj.userImages);
         this.basicUserDetailsObj.next(userObj);
       }));
   }

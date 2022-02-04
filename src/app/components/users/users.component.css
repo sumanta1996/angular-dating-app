@@ -31,17 +31,12 @@
     height: 10%;
 }
 
-.matched-content {
-    top: 7%;
-    left: 37%;
-    height: 650px;
-}
-
-.match-image {
-    position: absolute;
-    z-index: 10;
-    top: 45%;
-    left: 13%;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: white;
+.matched-content .modal-content {
+    width: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+    height: 550px;
+    padding: 0px;
+    border: none;
 }

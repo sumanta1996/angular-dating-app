@@ -1,3 +1,5 @@
+import { UserImages } from "./user-images";
+
 export class User {
     username!: string;
     firstName!: string;
@@ -9,7 +11,8 @@ export class User {
     company!: string;
     schoolName!: string;
     livingIn!: any;
-    imageData!: any;
+    //imageData!: any;
+    userImages!: UserImages[];
 
     /* constructor(username: string, firstName: string, lastName: string, age: number, gender: string, selfSummary: string) {
         this.username = username;

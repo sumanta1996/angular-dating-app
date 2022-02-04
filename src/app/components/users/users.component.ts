@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/common/user';
+import { UserImages } from 'src/app/common/user-images';
 import { RegistrationService } from 'src/app/services/registration.service';
 import { UsersService } from 'src/app/services/users.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalMatchedUserComponent } from '../modal-matched-user/modal-matched-user.component';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];
@@ -19,7 +23,7 @@ export class UsersComponent implements OnInit {
   action!: number;
 
   constructor(private usersService: UsersService, private authService: RegistrationService,
-    private route: ActivatedRoute, private router: Router) { }
+    private route: ActivatedRoute, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     //This runs everytime route parameter changes
@@ -37,6 +41,15 @@ export class UsersComponent implements OnInit {
     }, error => {
       this.authService.logout();
     })
+  }
+
+  processImageData(userImages: UserImages[]) {
+    userImages.sort((a,b) => (a.ordering > b.ordering) ? 1 : ((b.ordering > a.ordering) ? -1 : 0));
+    for(let i=0;i<userImages.length;i++) {
+      userImages[i].imageData = 'data:image/jpeg;base64,'+userImages[i].imageData;
+    }
+
+    return userImages;
   }
 
   performOperation(event: any): void {
@@ -73,6 +86,7 @@ export class UsersComponent implements OnInit {
         if(response.code === 3) { //It's a Match
           this.matchStr = response.message;
           this.matchedUser = response.data;
+          this.openModal();
         }
       },
       error => {
@@ -84,6 +98,19 @@ export class UsersComponent implements OnInit {
   removeMatchedUser() {
     this.matchStr = '';
     this.matchedUser = null;
+  }
+
+  clickInfo(user: User) {
+    this.router.navigateByUrl("/profile", {
+      state: {
+        user: user
+      }
+    });
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open(ModalMatchedUserComponent, { centered: true, modalDialogClass: 'matched-content' });
+    modalRef.componentInstance.matchedUser = this.matchedUser;
   }
 
 }

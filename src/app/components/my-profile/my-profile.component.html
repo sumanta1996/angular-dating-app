@@ -3,7 +3,7 @@
         <ngb-carousel *ngIf="userImagesList">
             <ng-template ngbSlide *ngFor="let userImage of userImagesList">
                 <div class="picsum-img-wrapper" style="width: 100%; height: 350px;">
-                    <img [src]="userImage.processedImage" alt="..." width="100%" height="100%">
+                    <img [src]="'data:image/jpeg;base64,'+userImage.imageData" alt="..." width="100%" height="100%">
                 </div>
             </ng-template>
         </ngb-carousel>
@@ -19,7 +19,7 @@
             </div>
             <div class="icon-container">
                 <img src="assets/home.png" width="20px" height="20px" class="mr-10" />
-                <span>Lives in {{loggedinUser.livingIn.name}}</span>
+                <span>Lives in {{loggedinUser.livingIn?.name}}</span>
             </div>
             <div class="icon-container">
                 <img src="assets/person.png" width="20px" height="20px" class="mr-10" />
@@ -29,7 +29,7 @@
             <span>{{loggedinUser.selfSummary}}</span>
         </div>
 
-        <div class="bottom-edit-info" routerLink="/edit-profile">
+        <div *ngIf="!isOtherUser" class="bottom-edit-info" routerLink="/edit-profile">
             <span>Edit Info</span>
         </div>
     </div>

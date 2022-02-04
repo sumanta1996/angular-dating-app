@@ -1,0 +1,23 @@
+<div class="modal-body matched-content">
+    <ngb-carousel *ngIf="matchedUser.userImages.length>0">
+        <ng-template ngbSlide *ngFor="let userImage of matchedUser.userImages">
+            <div class="picsum-img-wrapper" style="width: 100%; height: 550px;">
+                <img [src]="'data:image/jpeg;base64,'+userImage.imageData" alt="..." width="100%" height="100%"
+                    style="object-fit: cover;">
+            </div>
+        </ng-template>
+    </ngb-carousel>
+    <img *ngIf="!matchedUser.userImages && matchedUser.userImages.length === 0" src="assets/profile.png" alt="..." width="100%" height="100%" />
+    <h1 class="md-display-4 match-image">--- IT'S A MATCH ---</h1>
+    <div class="basic-details">
+        <h5 class="text-color-white">{{matchedUser.firstName}}, {{matchedUser.age}}</h5>
+        <br />
+        <p class="text-color-white">
+            {{matchedUser.selfSummary}}
+        </p>
+        <button type="button" class="btn btn-link" style="color: white;" (click)="activeModal.close('Close click')">
+            >>>>>>>
+            Keep
+            Swiping!!!</button>
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { Router } from '@angular/router';
 import { LoginUser } from 'src/app/common/login-user';
 import { User } from 'src/app/common/user';
+import { ConstantData } from 'src/app/constants/constantFile';
 import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class RegistrationComponent implements OnInit {
     new GenderData('F', 'Female')
   ];
   errorMsg!: string;
+  states = ConstantData.states;
 
   constructor(private formBuilder: FormBuilder, private route: Router, private regService: RegistrationService) { }
 
@@ -31,7 +33,11 @@ export class RegistrationComponent implements OnInit {
       lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
       age: new FormControl('', [Validators.required, Validators.pattern('[0-9]+')]),
       gender: new FormControl('', [Validators.required]),
-      selfSummary: new FormControl('', [Validators.required, Validators.minLength(2)])
+      selfSummary: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      jobTitle: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      company: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      schoolName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      livingIn: new FormControl('', [Validators.required])
     }, {validators: this.passwordChecks});
   }
   
@@ -60,6 +66,10 @@ export class RegistrationComponent implements OnInit {
       user.age = this.regForm.controls['age'].value,
       user.gender = this.regForm.controls['gender'].value.abbr,
       user.selfSummary = this.regForm.controls['selfSummary'].value
+      user.jobTitle = this.regForm.controls['jobTitle'].value;
+      user.company = this.regForm.controls['company'].value;
+      user.schoolName = this.regForm.controls['schoolName'].value;
+      user.livingIn = this.regForm.controls['livingIn'].value.code;
       let regReq = new LoginUser(this.regForm.controls['emailId'].value,
                                 this.regForm.controls['username'].value,
                                 this.regForm.controls['password'].value,

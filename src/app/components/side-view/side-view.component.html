@@ -1,0 +1,22 @@
+<div class="side-container">
+    <div class="header-container">
+        <div class="icon-container" *ngFor="let tab of tabs; let i=index" (click)="tabSwitched(i)">
+            <span [ngStyle] = "activeIndex === i ? {'font-weight': 'bold'}: {}">{{tab}}</span>
+            <hr *ngIf="activeIndex === i" />
+        </div>
+    </div>
+    <!-- UI for 'Matches' i.e. i = 0 -->
+    <div *ngIf="activeIndex === 0" class="matches-container">
+        <div *ngFor="let user of allMatches" class="card-container">
+            <img *ngIf="!(user.userImages && user.userImages.length>0)" src="assets/profile.png" width="100%" height="100%" />
+            <img *ngIf="user.userImages && user.userImages.length>0" 
+            [src]="'data:image/jpeg;base64,'+user.userImages[0].imageData" width="100%" height="100%" style="object-fit: cover;" />
+
+            <span class="name-container">{{user.firstName}}</span>
+        </div>
+    </div>
+    <!-- Ui for 'Messages' i.e. i = 1 -->
+    <div *ngIf="activeIndex === 1">
+
+    </div>
+</div>

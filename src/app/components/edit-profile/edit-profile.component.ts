@@ -41,10 +41,9 @@ export class EditProfileComponent implements OnInit {
       livingIn: new FormControl('')
     });
     this.username = sessionStorage.getItem('username');
-    this.fetchAllUserImages();
     this.regService.basicUserDetailsObj.subscribe(data => {
       this.loggedinUser = data;
-
+      this.fetchAllUserImages(data.userImages);
       //Pre-populating data for edit
       this.editForm.controls['selfSummary'].setValue(data.selfSummary);
       let gendObj = this.allGenders.find(gend => gend.abbr === data.gender);
@@ -52,21 +51,25 @@ export class EditProfileComponent implements OnInit {
       this.editForm.controls['jobTitle'].setValue(data.jobTitle);
       this.editForm.controls['company'].setValue(data.company);
       this.editForm.controls['schoolName'].setValue(data.schoolName);
-      this.editForm.controls['livingIn'].setValue(data.livingIn);
+      let stateObj;
+      if(data.livingIn && data.livingIn.code) {
+        //If it comes from my-profile then it is already set so just the set object data
+        stateObj = data.livingIn;
+      }else {
+        //Otherwise set the object data
+        stateObj = this.states.find(state => state.code === data.livingIn);
+      }
+      this.editForm.controls['livingIn'].setValue(stateObj);
     });
   }
 
   get f() { return this.editForm.controls; }
 
-  fetchAllUserImages() {
-    if (this.username) {
-      this.myProfile.getAllUserImages(this.username).subscribe(data => {
-        data.map((each, index) => {
-          this.userImagesList[index] = each;
-          this.userImagesList[index].processedImage = 'data:image/jpeg;base64,' + this.userImagesList[index].imageData;
-          return each;
-        })
-        console.log(this.userImagesList);
+  fetchAllUserImages(userImages: UserImages[]) {
+    if(userImages) {
+      userImages.map((user, i) => {
+        this.userImagesList[i] = user;
+        return user;
       });
     }
   }
@@ -81,7 +84,14 @@ export class EditProfileComponent implements OnInit {
       resData => {
         console.log(resData);
         this.toasterNotifyService.processToasterMessage(resData);
-        this.fetchAllUserImages();
+        //this.fetchAllUserImages();
+        this.regService.fetchBasicDetails().subscribe(
+          resData => {
+            console.log(resData);
+          }, 
+          err => {
+          console.log(err);
+        });
       },
       err => {
         console.log(err);

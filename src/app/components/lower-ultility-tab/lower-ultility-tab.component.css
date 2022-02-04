@@ -1,0 +1,33 @@
+.main-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    top: 348px;
+    left: 40%;
+    width: 20%;
+    height: fit-content;
+}
+
+.icon-size {
+    width: 30px;
+    height: 30px;
+}
+
+.icon-size:hover {
+    width: 35px;
+    height: 35px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    border: 3px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

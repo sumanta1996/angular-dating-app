@@ -1,0 +1,43 @@
+.card-view {
+    width: 400px;
+    border-radius: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    background: white;
+    top: 7%;
+    left: 37%;
+    height: 650px;
+    box-shadow: 10px 10px 10px 10px grey;
+}
+
+.card-view::-webkit-scrollbar {
+    display: none;
+}
+
+.bottom-edit-info {
+    position: absolute;
+    bottom: 5%;
+    left: 36%;
+    padding: 10px 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,139,135,1));
+    cursor: pointer;
+}
+
+.info-wrapper {
+    padding: 13px 13px 60px 13px;
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}

@@ -1,0 +1,79 @@
+<div class="main-content">
+    <div class="card-view">
+        <div cdkDropList class="image-container" (cdkDropListDropped)="drop($event)"> 
+            <div *ngFor="let user of userImagesList; let i = index" class="image-block" cdkDrag [cdkDragDisabled]="!user"
+            [ngStyle]="user? {'cursor': 'grab'}: {}">
+                <img *ngIf="user" [src]="user.processedImage" class="image-style">
+                <label class="file-upload-css"><img src="assets/add.png" width="100%" height="100%" />
+                    <input type="file" (change)="onFileChanged($event, i)" />
+                </label>
+            </div>
+        </div>
+        <!-- (ngSubmit)="registerUser()" -->
+        <form [formGroup]="editForm" >
+            <div class="form-group">
+                <label for="selfSummary">ABOUT {{loggedinUser.firstName | uppercase}}</label>
+                <textarea type="text" class="form-control" id="selfSummary" placeholder="Tell us something about you..."
+                    formControlName="selfSummary"></textarea>
+
+                <div *ngIf="f.selfSummary?.invalid && (f.selfSummary?.dirty || f.selfSummary?.touched)"
+                    class="alert alert-danger mt-1">
+
+                    <!-- Checking for built in validators and custom validator as well -->
+                    <div *ngIf="f.selfSummary?.errors?.required || f.selfSummary?.errors?.notOnlyWhitespace">
+                        Self Summary is required.
+                    </div>
+
+                    <div *ngIf="f.selfSummary?.errors?.minlength">
+                        Self Summary must be atleast 2 characters long.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="gender" class="mr-1">Gender:</label>
+                <select class="custom-select" formControlName="gender">
+                    <option [ngValue]="null" disabled>Choose your gender</option>
+                    <option *ngFor="let gnd of allGenders" [ngValue]="gnd">
+                        {{ gnd.displayName }}
+                    </option>
+                </select>
+
+                <div *ngIf="f.gender?.invalid && (f.gender?.dirty || f.gender?.touched)"
+                    class="alert alert-danger mt-1">
+
+                    <!-- Checking for built in validators and custom validator as well -->
+                    <div *ngIf="f.gender?.errors?.required">
+                        Gender is required.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="jobTitle">JOB TITLE</label>
+                <input type="text" class="form-control" id="jobTitle" placeholder="Add Job Title"
+                    formControlName="jobTitle">
+            </div>
+            <div class="form-group">
+                <label for="company">COMPANY</label>
+                <input type="text" class="form-control" id="company" placeholder="Add Company Name"
+                    formControlName="company">
+            </div>
+            <div class="form-group">
+                <label for="schoolName">SCHOOL</label>
+                <input type="text" class="form-control" id="schoolName" placeholder="Add School"
+                    formControlName="schoolName">
+            </div>
+            <div class="form-group">
+                <label for="livingIn" class="mr-1">LIVING IN</label>
+                <select class="custom-select" formControlName="livingIn">
+                    <option [ngValue]="null" disabled>Choose your city</option>
+                    <option *ngFor="let state of states" [ngValue]="state">
+                        {{ state.name }}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="saving-bar" (click)="save()">
+        <span>Save</span>
+    </div>
+</div>

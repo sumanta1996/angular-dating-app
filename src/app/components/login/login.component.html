@@ -1,0 +1,54 @@
+<div class="container center-card">
+    <div class="background-img-container">
+        <img src="assets/background.webp" alt="..." width="100%" height="100%" />
+    </div>
+    <div class="login-card">
+        <h2>Login Form</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" placeholder="Enter username" formControlName="username">
+
+                <div *ngIf="f.username?.invalid && (f.username?.dirty || f.username?.touched)"
+                    class="alert alert-danger mt-1">
+
+                    <!-- Checking for built in validators and custom validator as well -->
+                    <div *ngIf="f.username?.errors?.required || f.username?.errors?.notOnlyWhitespace">
+                        Username is required.
+                    </div>
+
+                    <div *ngIf="f.username?.errors?.minlength">
+                        Username must be atleast 2 characters long.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd"
+                    formControlName="password">
+
+                <div *ngIf="f.password?.invalid && (f.password?.dirty || f.password?.touched)"
+                    class="alert alert-danger mt-1">
+
+                    <!-- Checking for built in validators and custom validator as well -->
+                    <div *ngIf="f.password?.errors?.required || f.password?.errors?.notOnlyWhitespace">
+                        Password is required.
+                    </div>
+
+                    <div *ngIf="f.password?.errors?.minlength">
+                        Password must be atleast 2 characters long.
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="checkbox">
+                <label><input type="checkbox" name="remember"> Remember me</label>
+            </div> -->
+            <button type="submit" class="btn btn-info">Login</button>
+            <small *ngIf="msg" class="alert alert-danger mt-1 ml-3">{{msg}}</small>
+            <div>
+                <button routerLink="/register" type="submit" class="btn btn-info mt-1">Register User</button>
+            </div>
+        </form>
+    </div>
+</div>

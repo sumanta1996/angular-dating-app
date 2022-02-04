@@ -1,0 +1,36 @@
+<div class="main-content">
+    <div class="card-view">
+        <ngb-carousel *ngIf="userImagesList">
+            <ng-template ngbSlide *ngFor="let userImage of userImagesList">
+                <div class="picsum-img-wrapper" style="width: 100%; height: 350px;">
+                    <img [src]="userImage.processedImage" alt="..." width="100%" height="100%">
+                </div>
+            </ng-template>
+        </ngb-carousel>
+        <div class="info-wrapper">
+            <h2>{{loggedinUser.firstName}} {{loggedinUser.age}}</h2>
+            <div class="icon-container">
+                <img src="assets/job.png" width="20px" height="20px" class="mr-10" />
+                <span>{{loggedinUser.company}}</span>
+            </div>
+            <div class="icon-container">
+                <img src="assets/college.png" width="20px" height="20px" class="mr-10" />
+                <span>{{loggedinUser.schoolName}}</span>
+            </div>
+            <div class="icon-container">
+                <img src="assets/home.png" width="20px" height="20px" class="mr-10" />
+                <span>Lives in {{loggedinUser.livingIn.name}}</span>
+            </div>
+            <div class="icon-container">
+                <img src="assets/person.png" width="20px" height="20px" class="mr-10" />
+                <span>Straight</span>
+            </div>
+            <hr />
+            <span>{{loggedinUser.selfSummary}}</span>
+        </div>
+
+        <div class="bottom-edit-info" routerLink="/edit-profile">
+            <span>Edit Info</span>
+        </div>
+    </div>
+</div>>

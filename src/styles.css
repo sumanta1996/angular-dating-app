@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+.main-content{
+    padding-top:50px;
+    min-height:88vh;
+}
+
+.main-content.page-m{
+    padding:10% 30% 10% 5%
+}

@@ -1,0 +1,47 @@
+.section-component {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.card-view {
+    width: 400px;
+    height: 550px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: absolute;
+    top: -35px; /* Change this value to move the entire card */
+    background: white;
+}
+
+.basic-details {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+}
+
+.text-color-white {
+    color: white;
+}
+
+.lower-tab {
+    width: 20%;
+    height: 10%;
+}
+
+.matched-content {
+    top: 7%;
+    left: 37%;
+    height: 650px;
+}
+
+.match-image {
+    position: absolute;
+    z-index: 10;
+    top: 45%;
+    left: 13%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+}

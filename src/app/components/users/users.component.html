@@ -1,0 +1,37 @@
+<div class="main-content">
+    <div *ngFor="let user of users; let i = index" class="section-component">
+        <div class="card-view" [ngStyle]="cardIndex === i ? (action === 3? {
+            'transform': 'translateX(400px) rotate(40deg)',
+            'transition': '0.3s ease-out'
+        }: action === 2? {
+            'transform': 'translateX(-400px) rotate(-40deg)',
+            'transition': '0.3s ease-out'
+        }: {}): {}">
+            <img src="https://mdbootstrap.com/img/new/standard/nature/184.webp" alt="..." width="100%" height="100%" />
+            <div class="basic-details">
+                <h5 class="text-color-white">{{user.firstName}}, {{user.age}}</h5>
+                <br />
+                <p class="text-color-white">
+                    {{user.selfSummary}}
+                </p>
+            </div>
+        </div>
+        <div class="lower-tab">
+            <app-lower-ultility-tab (lowerTabEvents)="performOperation($event)" [currIndex]="i">
+            </app-lower-ultility-tab>
+        </div>
+    </div>
+    <!--  -->
+    <div *ngIf="matchedUser" class="card-view matched-content">
+        <img src="https://mdbootstrap.com/img/new/standard/nature/184.webp" alt="..." width="100%" height="100%" />
+        <h1 class="md-display-4 match-image">--- {{matchStr}} ---</h1>
+        <div class="basic-details">
+            <h5 class="text-color-white">{{matchedUser.firstName}}, {{matchedUser.age}}</h5>
+            <br />
+            <p class="text-color-white">
+                {{matchedUser.selfSummary}}
+            </p>
+            <button type="button" class="btn btn-link" style="color: white;" (click)="removeMatchedUser()"> >>>>>>> Keep Swiping!!!</button>
+        </div>
+    </div>
+</div>

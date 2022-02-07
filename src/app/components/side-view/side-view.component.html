@@ -7,10 +7,13 @@
     </div>
     <!-- UI for 'Matches' i.e. i = 0 -->
     <div *ngIf="activeIndex === 0" class="matches-container">
-        <div *ngFor="let user of allMatches" class="card-container">
-            <img *ngIf="!(user.userImages && user.userImages.length>0)" src="assets/profile.png" width="100%" height="100%" />
+        <div *ngFor="let user of allMatches; let i=index" class="card-container" (click)="openConversationScreen(user, i)"
+            [ngStyle]="userClickedIndex !== -1 && userClickedIndex !== i? {'opacity': '0.5'}: {'opacity': '1.0'}">
+            <!-- Default Image -->
+            <img *ngIf="!(user.userImages && user.userImages.length>0)" src="assets/profile.png" class="image-fit-cover" />
+            <!-- Choose 1st Image -->
             <img *ngIf="user.userImages && user.userImages.length>0" 
-            [src]="'data:image/jpeg;base64,'+user.userImages[0].imageData" width="100%" height="100%" style="object-fit: cover;" />
+            [src]="'data:image/jpeg;base64,'+user.userImages[0].imageData" class="image-fit-cover" />
 
             <span class="name-container">{{user.firstName}}</span>
         </div>

@@ -54,6 +54,7 @@ export class RegistrationService {
         map(userdata => {
           console.log("User signed up", userdata);
           this.router.navigateByUrl('/login');
+          return userdata;
         }));
   }
 

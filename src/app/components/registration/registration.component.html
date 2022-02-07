@@ -62,7 +62,7 @@
                     name="confpwd" formControlName="confirmPassword">
 
                 <div *ngIf="(f.confirmPassword?.invalid && (f.confirmPassword?.dirty || f.confirmPassword?.touched)) || 
-                            (f.confirmPassword?.touched && regForm?.errors?.noMatch)" class="alert alert-danger mt-1">
+                            ((f.confirmPassword?.dirty || f.confirmPassword?.touched) && regForm?.errors?.noMatch)" class="alert alert-danger mt-1">
 
                     <!-- Checking for built in validators and custom validator as well -->
                     <div *ngIf="f.confirmPassword?.errors?.required">

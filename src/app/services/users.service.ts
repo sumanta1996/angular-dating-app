@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResponseData } from '../common/response-data';
 import { User } from '../common/user';
@@ -13,7 +13,10 @@ export class UsersService {
   private allUsersForMatchingUrl = 'http://localhost:8080/users/findAll';
   private swipeRight = 'http://localhost:8080/users/swipeRight';
   private genderSpecificUsers = this.allUsersUrl+'search/findByGender?gender=';
-  private fetchAllMatches = 'http://localhost:8080/users/fetchAllMatches';
+  private fetchAllMatchesUrl = 'http://localhost:8080/users/fetchAllMatches';
+
+  allMatches: Subject<User[]> = new ReplaySubject<User[]>();
+  userClickedIndex: Subject<number> = new BehaviorSubject<number>(-1);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,7 +37,9 @@ export class UsersService {
   }
 
   fetchAllUserMatches(): Observable<any> {
-    return this.httpClient.get<any>(this.fetchAllMatches);
+    return this.httpClient.get<any>(this.fetchAllMatchesUrl).pipe(map(data => {
+      this.allMatches.next(data);
+    }));
   }
 }
 

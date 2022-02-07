@@ -1,0 +1,68 @@
+<div class="main-container">
+    <div class="section-component">
+        <!-- Conversations -->
+        <div class="conversation-container">
+            <div class="header-container">
+                <div class="profile-pic-container">
+                    <img *ngIf="user.userImages && user.userImages.length>0"
+                        [src]="'data:image/jpeg;base64,'+user.userImages[0].imageData" class="profile-pic-css" />
+                    <img *ngIf="!user.userImages || user.userImages.length === 0" src="assets/profile.png" alt="..."
+                        class="profile-pic-css" />
+                </div>
+                <span>You matched with {{user.firstName}}</span>
+                <div class="close-container" (click)="closeConversationScreen()">
+                    <img src="assets/cross.png" width="26px" height="26px" />
+                </div>
+            </div>
+            <div class="conversation-body-container">
+                <!-- If no messages are there -->
+                <div class="no-message-container">
+                    <span>You matched with <b>{{user.firstName}}</b></span>
+                    <div class="center-pic">
+                        <img [src]="'data:image/jpeg;base64,'+user.userImages[0].imageData" class="image-fit-cover" />
+                    </div>
+                </div>
+            </div>
+            <div class="footer-chat-container">
+                <textarea class="input-container" (keyup)="onTyping($event)"></textarea>
+                <div class="button-container">
+                    <button type="button" [disabled]="message.length === 0" class="button-style" (click)="triggerMessage()">SEND</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Lookup -->
+        <div class="profile-container">
+            <ngb-carousel *ngIf="user.userImages.length>0">
+                <ng-template ngbSlide *ngFor="let userImage of user.userImages">
+                    <div class="picsum-img-wrapper" style="width: 100%; height: 400px;">
+                        <img [src]="'data:image/jpeg;base64,'+userImage.imageData" alt="..." class="image-fit-cover">
+                        <img *ngIf="user.userImages.length === 0 || !user.userImages" src="assets/profile.png" alt="..."
+                            class="image-fit-cover" />
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+            <div class="info-wrapper">
+                <h2>{{user.firstName}} {{user.age}}</h2>
+                <div class="icon-container">
+                    <img src="assets/job.png" width="20px" height="20px" class="mr-10" />
+                    <span>{{user.company}}</span>
+                </div>
+                <div class="icon-container">
+                    <img src="assets/college.png" width="20px" height="20px" class="mr-10" />
+                    <span>{{user.schoolName}}</span>
+                </div>
+                <div class="icon-container">
+                    <img src="assets/home.png" width="20px" height="20px" class="mr-10" />
+                    <span>Lives in {{user.livingIn?.name}}</span>
+                </div>
+                <div class="icon-container">
+                    <img src="assets/person.png" width="20px" height="20px" class="mr-10" />
+                    <span>Straight</span>
+                </div>
+                <hr />
+                <span>{{user.selfSummary}}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,13 +10,12 @@
             <ngb-carousel *ngIf="user.userImages.length>0">
                 <ng-template ngbSlide *ngFor="let userImage of user.userImages">
                     <div class="picsum-img-wrapper" style="width: 100%; height: 550px;">
-                        <img [src]="'data:image/jpeg;base64,'+userImage.imageData" alt="..." width="100%" height="100%"
-                            style="object-fit: cover;">
+                        <img [src]="'data:image/jpeg;base64,'+userImage.imageData" alt="..." class="image-fit-cover">
                     </div>
                 </ng-template>
             </ngb-carousel>
             <img *ngIf="user.userImages.length === 0 || !user.userImages" src="assets/profile.png" alt="..."
-                width="100%" height="100%" />
+            class="image-fit-cover" />
             <div class="basic-details">
                 <div style="display: flex; flex-direction: row; align-items: center;">
                     <h5 class="text-color-white">{{user.firstName}}, {{user.age}}</h5>

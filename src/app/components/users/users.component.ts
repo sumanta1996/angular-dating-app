@@ -37,6 +37,12 @@ export class UsersComponent implements OnInit {
   getUsersList(): void {
     this.usersService.getAllUsersListForMatching().subscribe(response => {
       console.log(response);
+      response.map(user => {
+        if(user.userImages) {
+          this.processImageData(user.userImages);
+        }
+        return user;
+      });
       this.users = response;
     }, error => {
       this.authService.logout();
@@ -45,9 +51,6 @@ export class UsersComponent implements OnInit {
 
   processImageData(userImages: UserImages[]) {
     userImages.sort((a,b) => (a.ordering > b.ordering) ? 1 : ((b.ordering > a.ordering) ? -1 : 0));
-    for(let i=0;i<userImages.length;i++) {
-      userImages[i].imageData = 'data:image/jpeg;base64,'+userImages[i].imageData;
-    }
 
     return userImages;
   }
@@ -87,6 +90,7 @@ export class UsersComponent implements OnInit {
           this.matchStr = response.message;
           this.matchedUser = response.data;
           this.openModal();
+          this.usersService.fetchAllUserMatches().subscribe();
         }
       },
       error => {

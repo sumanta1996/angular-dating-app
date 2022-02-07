@@ -2,8 +2,7 @@
     <ngb-carousel *ngIf="matchedUser.userImages.length>0">
         <ng-template ngbSlide *ngFor="let userImage of matchedUser.userImages">
             <div class="picsum-img-wrapper" style="width: 100%; height: 550px;">
-                <img [src]="'data:image/jpeg;base64,'+userImage.imageData" alt="..." width="100%" height="100%"
-                    style="object-fit: cover;">
+                <img [src]="'data:image/jpeg;base64,'+userImage.imageData" alt="..." class="image-fit-cover">
             </div>
         </ng-template>
     </ngb-carousel>

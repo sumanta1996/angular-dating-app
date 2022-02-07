@@ -1,6 +1,6 @@
 <div>
   <header class="header-wrapper">
-    <div *ngIf="isLoggedIn()" class="homeicon-container" routerLink="/users" routerLinkActive="active-link">
+    <div *ngIf="isLoggedIn() && showHome" class="homeicon-container" routerLink="/users" routerLinkActive="active-link">
       <img src="assets/gohome.png" width="40px" height="40px" title="Home" />
     </div>
     <div *ngIf="isLoggedIn()" routerLink="/my-profile" routerLinkActive="active-link" class="profile-container">

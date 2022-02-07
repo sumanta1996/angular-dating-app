@@ -16,6 +16,10 @@ export class ToasterNotifyService {
     this.toastr.error(message, title);
   }
 
+  infoToaster(message: string, title: string) {
+    this.toastr.info(message, title);
+  }
+
   processToasterMessage(resData: any) {
     if(resData) {
       if(resData.code>0) {

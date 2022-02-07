@@ -5,6 +5,7 @@ import { LoginUser } from 'src/app/common/login-user';
 import { User } from 'src/app/common/user';
 import { ConstantData } from 'src/app/constants/constantFile';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { ToasterNotifyService } from 'src/app/services/toaster-notify.service';
 
 @Component({
   selector: 'app-registration',
@@ -21,7 +22,8 @@ export class RegistrationComponent implements OnInit {
   errorMsg!: string;
   states = ConstantData.states;
 
-  constructor(private formBuilder: FormBuilder, private route: Router, private regService: RegistrationService) { }
+  constructor(private formBuilder: FormBuilder, private route: Router, private regService: RegistrationService, 
+            private toasterNotifyService: ToasterNotifyService) { }
 
   ngOnInit(): void {
     this.regForm = this.formBuilder.group({
@@ -77,6 +79,7 @@ export class RegistrationComponent implements OnInit {
       console.log('Registration: ', regReq);
       this.regService.registerUser(regReq).subscribe(data => {
         console.log("Success: ", data);
+        this.toasterNotifyService.processToasterMessage(data);
       }, error => {
         console.log("Error: ", error);
         this.errorMsg = error;

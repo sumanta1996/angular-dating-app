@@ -48,4 +48,5 @@
 .card-container:hover {
     width: 110px;
     height: 160px;
+    opacity: 1 !important;
 }

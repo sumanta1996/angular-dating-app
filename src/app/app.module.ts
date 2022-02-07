@@ -20,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SideViewComponent } from './components/side-view/side-view.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ModalMatchedUserComponent } from './components/modal-matched-user/modal-matched-user.component';
+import { ConversationScreenComponent } from './conversation-screen/conversation-screen.component';
 
 const routes: Routes = [
   {path: 'users', component: UsersComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'my-profile', component: MyProfileComponent},
   {path: 'profile', component: MyProfileComponent},
   {path: 'edit-profile', component: EditProfileComponent},
+  {path: 'conversation/:id', component: ConversationScreenComponent},
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
 ];
@@ -42,7 +44,8 @@ const routes: Routes = [
     MyProfileComponent,
     EditProfileComponent,
     SideViewComponent,
-    ModalMatchedUserComponent
+    ModalMatchedUserComponent,
+    ConversationScreenComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { LoginUser } from '../common/login-user';
 import { User } from '../common/user';
 import { UserImages } from '../common/user-images';
+import { UsersService } from './users.service';
 
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -20,7 +21,7 @@ export class RegistrationService {
 
   basicUserDetailsObj: Subject<User> = new ReplaySubject<User>();
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient, private router: Router, private usersService: UsersService) { }
 
   public loginUserFromRemote(username: string, password: string): Observable<any> {
 
@@ -102,6 +103,7 @@ export class RegistrationService {
     sessionStorage.clear();
     this.httpClient.post<any>(this.authUrl + 'logout', {});
     this.basicUserDetailsObj.next(new User());
+    this.usersService.userClickedIndex.next(-1);
     this.router.navigate(['/login']);
   }
 }

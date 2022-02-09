@@ -32,3 +32,19 @@
     align-items: center;
     cursor: pointer;
 }
+
+.circle-disabled {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    border: 3px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: not-allowed;
+}
+
+.icon-disabled {
+    width: 30px;
+    height: 30px;
+}

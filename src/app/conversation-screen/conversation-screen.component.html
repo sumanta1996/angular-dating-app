@@ -4,29 +4,47 @@
         <div class="conversation-container">
             <div class="header-container">
                 <div class="profile-pic-container">
-                    <img *ngIf="user.userImages && user.userImages.length>0"
+                    <img *ngIf="user && user.userImages && user.userImages.length>0"
                         [src]="'data:image/jpeg;base64,'+user.userImages[0].imageData" class="profile-pic-css" />
-                    <img *ngIf="!user.userImages || user.userImages.length === 0" src="assets/profile.png" alt="..."
+                    <img *ngIf="user && (!user.userImages || user.userImages.length === 0)" src="assets/profile.png" alt="..."
                         class="profile-pic-css" />
                 </div>
-                <span>You matched with {{user.firstName}}</span>
+                <span>You matched with {{user?.firstName}} on {{user?.matchedDate | date:'MM/dd/yyyy'}}</span>
                 <div class="close-container" (click)="closeConversationScreen()">
                     <img src="assets/cross.png" width="26px" height="26px" />
                 </div>
             </div>
             <div class="conversation-body-container">
                 <!-- If no messages are there -->
-                <div class="no-message-container">
+                <div *ngIf="!userMessages || userMessages.length === 0" class="no-message-container">
                     <span>You matched with <b>{{user.firstName}}</b></span>
                     <div class="center-pic">
                         <img [src]="'data:image/jpeg;base64,'+user.userImages[0].imageData" class="image-fit-cover" />
                     </div>
                 </div>
+                <!-- If messages are there then show this -->
+                <div *ngIf="userMessages && userMessages.length > 0" class="chat-container">
+                    <div *ngFor="let message of userMessages; let i=index" class="message-date-container">
+                        <!-- Show the date here -->
+                        <div *ngIf="validateToShowDate(message, i === (userMessages.length-1) ? null: userMessages[i+1])" class="date-container">
+                            <span>{{message.dateCreated | date}}</span>
+                        </div>
+                        <div class="message-container"
+                            [ngStyle]="username === message.username? {}: {'flex-direction': 'row-reverse'}">
+                            <div class="time-container" id="time">{{message.dateCreated | date:'shortTime'}}</div>
+                            <span class="message-design" id="message"
+                                [ngStyle]="username === message.username? {}: {'background-color': '#b9bfc8'}">{{message.message}}</span>
+                            <div *ngIf="i === 0 && showLoader" class="loader"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="footer-chat-container">
-                <textarea class="input-container" (keyup)="onTyping($event)"></textarea>
+                <!-- (keyup)="onTyping($event)" -->
+                <textarea class="input-container" [(ngModel)]="message"></textarea>
                 <div class="button-container">
-                    <button type="button" [disabled]="message.length === 0" class="button-style" (click)="triggerMessage()">SEND</button>
+                    <button type="button" [disabled]="message.length === 0" class="button-style"
+                        (click)="triggerMessage()">SEND</button>
                 </div>
             </div>
         </div>

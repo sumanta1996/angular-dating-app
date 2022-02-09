@@ -29,8 +29,9 @@
             </div>
         </div>
         <div class="lower-tab">
-            <app-lower-ultility-tab (lowerTabEvents)="performOperation($event)" [currIndex]="i">
+            <app-lower-ultility-tab (lowerTabEvents)="performOperation($event)" [currIndex]="i" [doDisableReplay]="userInMemory? false: true">
             </app-lower-ultility-tab>
+            <!-- <p style="position: fixed; right: 40px; top: 300px;">{{userInMemory? true: false}}</p> -->
         </div>
     </div>
 </div>

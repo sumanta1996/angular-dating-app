@@ -13,6 +13,9 @@ export class User {
     livingIn!: any;
     //imageData!: any;
     userImages!: UserImages[];
+    conversationId!: number;
+    matchedDate!: Date;
+    sexuality!: string;
 
     /* constructor(username: string, firstName: string, lastName: string, age: number, gender: string, selfSummary: string) {
         this.username = username;

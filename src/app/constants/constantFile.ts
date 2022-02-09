@@ -1,3 +1,5 @@
+import { User } from "../common/user";
+
 export class ConstantData {
     public static states = [{"code": "AN","name": "Andaman and Nicobar Islands"},
     {"code": "AP","name": "Andhra Pradesh"},
@@ -35,4 +37,39 @@ export class ConstantData {
     {"code": "UK","name": "Uttarakhand"},
     {"code": "UP","name": "Uttar Pradesh"},
     {"code": "WB","name": "West Bengal"}];
+
+    public static MW = "MW";
+    public static M = "M";
+    public static W = "W";
+    public static Bisexual = "Bisexual";
+    public static Straight = "Straight";
+    public static Gay = "Gay";
+
+    public static sexuality = [
+        {"code": ConstantData.MW, "name": "Intersted in Men and Woman"},
+        {"code": ConstantData.M, "name": "Intersted in Men"},
+        {"code": ConstantData.W, "name": "Intersted in Woman"}
+    ];
+
+    public static checkForSexuality(user: User) {
+        if(user.sexuality) {
+            if(user.sexuality === ConstantData.MW) {
+                return ConstantData.Bisexual;
+            }else if(user.sexuality === ConstantData.M) {
+                if(user.gender === 'M') {
+                    return ConstantData.Gay;
+                }else {
+                    return ConstantData.Straight;
+                }
+            }else if(user.sexuality === ConstantData.W) {
+                if(user.gender === 'F') {
+                    return ConstantData.Gay;
+                }else {
+                    return ConstantData.Straight;
+                }
+            }
+        }
+
+        return "";
+    }
 }

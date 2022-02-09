@@ -6,6 +6,7 @@ import { RegistrationService } from 'src/app/services/registration.service';
 import { UsersService } from 'src/app/services/users.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalMatchedUserComponent } from '../modal-matched-user/modal-matched-user.component';
+import { ConversationsService } from 'src/app/services/conversations.service';
 
 @Component({
   selector: 'app-users',
@@ -16,18 +17,20 @@ import { ModalMatchedUserComponent } from '../modal-matched-user/modal-matched-u
 export class UsersComponent implements OnInit {
   users: User[] = [];
   cardIndex: number = -1;
-  userInMemory!: User;
+  userInMemory!: User | null;
   tempUser!: User;
   matchStr!: string;
   matchedUser!: any;
   action!: number;
 
-  constructor(private usersService: UsersService, private authService: RegistrationService,
+  constructor(private usersService: UsersService, private authService: RegistrationService, private convService: ConversationsService,
     private route: ActivatedRoute, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     //This runs everytime route parameter changes
     this.route.paramMap.subscribe((() => {
+      this.usersService.userClickedIndex.next(-1);
+      this.convService.activatedUsername.next('');
       this.getUsersList();
     }));
 
@@ -80,6 +83,11 @@ export class UsersComponent implements OnInit {
     if(event.identifier === '3') {
       //If somebody likes then hit database
       this.handleSwipeRight();
+    }
+
+    if(event.identifier === '1' && this.userInMemory) {
+      this.users.push(this.userInMemory);
+      this.userInMemory = null;
     }
   }
 

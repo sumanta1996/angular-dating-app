@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class LowerUltilityTabComponent implements OnInit {
   @Output() lowerTabEvents = new EventEmitter<Object>();
   @Input() currIndex: number = -1; 
+  @Input() doDisableReplay!: boolean;
 
   constructor() { }
 

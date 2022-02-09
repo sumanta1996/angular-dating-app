@@ -11,25 +11,25 @@
             <img src="assets/profile.png" alt="..." class="image-fit-cover">
         </div>
         <div class="info-wrapper">
-            <h2>{{loggedinUser.firstName}} {{loggedinUser.age}}</h2>
+            <h2>{{loggedinUser?.firstName}} {{loggedinUser?.age}}</h2>
             <div class="icon-container">
                 <img src="assets/job.png" width="20px" height="20px" class="mr-10" />
-                <span>{{loggedinUser.company}}</span>
+                <span>{{loggedinUser?.company}}</span>
             </div>
             <div class="icon-container">
                 <img src="assets/college.png" width="20px" height="20px" class="mr-10" />
-                <span>{{loggedinUser.schoolName}}</span>
+                <span>{{loggedinUser?.schoolName}}</span>
             </div>
             <div class="icon-container">
                 <img src="assets/home.png" width="20px" height="20px" class="mr-10" />
-                <span>Lives in {{loggedinUser.livingIn?.name}}</span>
+                <span>Lives in {{loggedinUser?.livingIn?.name}}</span>
             </div>
             <div class="icon-container">
                 <img src="assets/person.png" width="20px" height="20px" class="mr-10" />
-                <span>Straight</span>
+                <span>{{checkSexuality(loggedinUser)}}</span>
             </div>
             <hr />
-            <span>{{loggedinUser.selfSummary}}</span>
+            <span>{{loggedinUser?.selfSummary}}</span>
         </div>
 
         <div *ngIf="!isOtherUser" class="bottom-edit-info" routerLink="/edit-profile">

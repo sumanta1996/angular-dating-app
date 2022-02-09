@@ -1,6 +1,11 @@
 <div class="main-content">
-    <div class="circle" (click)="chooseIcon('1')">
+    <!-- <p>{{doDisableReplay}}</p> -->
+    <div *ngIf="!doDisableReplay" class="circle" (click)="chooseIcon('1')">
         <img src="assets/replay.svg" alt="cross" class="icon-size" />
+    </div>
+    <div *ngIf="doDisableReplay" class="circle-disabled" 
+    title="No users are there to replay" >
+        <img src="assets/replay.svg" alt="cross" class="icon-disabled" />
     </div>
     <div class="circle" (click)="chooseIcon('2')">
         <img src="assets/cross.png" alt="cross" class="icon-size" />

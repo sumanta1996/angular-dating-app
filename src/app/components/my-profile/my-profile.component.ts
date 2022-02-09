@@ -16,6 +16,7 @@ export class MyProfileComponent implements OnInit {
   username!: any;
   loggedinUser!: User;
   isOtherUser!: boolean;
+  sexuality!: string;
 
   constructor(private myProfile: MyprofileService, private regService: RegistrationService,
               private route: ActivatedRoute, private router: Router) { }
@@ -33,7 +34,11 @@ export class MyProfileComponent implements OnInit {
         this.fetchLoggedInUserDetails();
       }
     });
-    
+  }
+
+  checkSexuality(user: User) {
+    console.log("Yes here: ", user);
+    return ConstantData.checkForSexuality(user);
   }
 
   fetchLoggedInUserDetails() {

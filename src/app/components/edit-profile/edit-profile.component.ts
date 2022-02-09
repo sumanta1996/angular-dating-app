@@ -4,7 +4,7 @@ import { MyprofileService } from 'src/app/services/myprofile.service';
 import { RegistrationService } from 'src/app/services/registration.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { ToasterNotifyService } from 'src/app/services/toaster-notify.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/common/user';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
@@ -26,40 +26,49 @@ export class EditProfileComponent implements OnInit {
     new GenderData('F', 'Female')
   ];
   states = ConstantData.states;
+  sexuality = ConstantData.sexuality;
 
   constructor(private myProfile: MyprofileService, private regService: RegistrationService, 
     private toasterNotifyService: ToasterNotifyService, private userService: UsersService,
-    private router: Router, private formBuilder: FormBuilder) { }
+    private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.editForm = this.formBuilder.group({
-      gender: new FormControl(''),
-      selfSummary: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      jobTitle: new FormControl(''),
-      company: new FormControl(''),
-      schoolName: new FormControl(''),
-      livingIn: new FormControl('')
-    });
-    this.username = sessionStorage.getItem('username');
-    this.regService.basicUserDetailsObj.subscribe(data => {
-      this.loggedinUser = data;
-      this.fetchAllUserImages(data.userImages);
-      //Pre-populating data for edit
-      this.editForm.controls['selfSummary'].setValue(data.selfSummary);
-      let gendObj = this.allGenders.find(gend => gend.abbr === data.gender);
-      this.editForm.controls['gender'].setValue(gendObj);
-      this.editForm.controls['jobTitle'].setValue(data.jobTitle);
-      this.editForm.controls['company'].setValue(data.company);
-      this.editForm.controls['schoolName'].setValue(data.schoolName);
-      let stateObj;
-      if(data.livingIn && data.livingIn.code) {
-        //If it comes from my-profile then it is already set so just the set object data
-        stateObj = data.livingIn;
-      }else {
-        //Otherwise set the object data
-        stateObj = this.states.find(state => state.code === data.livingIn);
-      }
-      this.editForm.controls['livingIn'].setValue(stateObj);
+    console.log(this.sexuality);
+    this.route.paramMap.subscribe(() => {
+      console.log('Edit Profile activated.');
+      this.editForm = this.formBuilder.group({
+        gender: new FormControl(''),
+        selfSummary: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        jobTitle: new FormControl(''),
+        company: new FormControl(''),
+        schoolName: new FormControl(''),
+        livingIn: new FormControl(''),
+        sexuality: new FormControl('')
+      });
+      this.username = sessionStorage.getItem('username');
+      this.regService.basicUserDetailsObj.subscribe(data => {
+        console.log(data);
+        this.loggedinUser = data;
+        this.fetchAllUserImages(data.userImages);
+        //Pre-populating data for edit
+        this.editForm.controls['selfSummary'].setValue(data.selfSummary);
+        let gendObj = this.allGenders.find(gend => gend.abbr === data.gender);
+        this.editForm.controls['gender'].setValue(gendObj);
+        this.editForm.controls['jobTitle'].setValue(data.jobTitle);
+        this.editForm.controls['company'].setValue(data.company);
+        this.editForm.controls['schoolName'].setValue(data.schoolName);
+        this.editForm.controls['sexuality'].setValue(ConstantData.sexuality.find(each => each.code === data.sexuality));
+
+        let stateObj;
+        if(data.livingIn && data.livingIn.code) {
+          //If it comes from my-profile then it is already set so just the set object data
+          stateObj = data.livingIn;
+        }else {
+          //Otherwise set the object data
+          stateObj = this.states.find(state => state.code === data.livingIn);
+        }
+        this.editForm.controls['livingIn'].setValue(stateObj);
+      });
     });
   }
 
@@ -71,6 +80,8 @@ export class EditProfileComponent implements OnInit {
         this.userImagesList[i] = user;
         return user;
       });
+    }else {
+      this.userImagesList = new Array(6);
     }
   }
 
@@ -124,6 +135,7 @@ export class EditProfileComponent implements OnInit {
     user.company = this.editForm.controls['company'].value;
     user.schoolName = this.editForm.controls['schoolName'].value;
     user.livingIn = this.editForm.controls['livingIn'].value? this.editForm.controls['livingIn'].value.code: null;
+    user.sexuality = this.editForm.controls['sexuality'].value? this.editForm.controls['sexuality'].value.code: null;
 
     if(this.validateEditData(user)) {
       //If data changes then hit db
@@ -151,7 +163,8 @@ export class EditProfileComponent implements OnInit {
         this.compareEquality(user.jobTitle, this.loggedinUser.jobTitle) &&
         this.compareEquality(user.company, this.loggedinUser.company) &&
         this.compareEquality(user.schoolName, this.loggedinUser.schoolName) &&
-        this.compareEquality(user.livingIn, this.loggedinUser.livingIn))
+        this.compareEquality(user.livingIn, this.loggedinUser.livingIn) &&
+        this.compareEquality(user.sexuality, this.loggedinUser.sexuality))
   }
 
   compareEquality(str1: string, str2: string) {

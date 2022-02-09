@@ -10,7 +10,7 @@ import { UsersComponent } from './components/users/users.component';
 import { LowerUltilityTabComponent } from './components/lower-ultility-tab/lower-ultility-tab.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/AuthInterceptor';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
@@ -57,7 +57,8 @@ const routes: Routes = [
     DragDropModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    MatTabsModule
+    MatTabsModule,
+    FormsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

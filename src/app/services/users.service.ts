@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResponseData } from '../common/response-data';
 import { User } from '../common/user';
+import { UserImages } from '../common/user-images';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,14 @@ export class UsersService {
       this.allMatches.next(data);
     }));
   }
+
+  fetchBasicUserDetailsBasedOnUsername(username: string): Observable<any> {
+    return this.httpClient.get<any>(this.allUsersUrl+username);
+  }
+
+  fetchUserImagesBasedOnUsername(userImagesUrl: string): Observable<UserImages[]> {
+    return this.httpClient.get<GetResponseUserImages>(userImagesUrl).pipe(map(response => response._embedded.userImages));
+  }
 }
 
 interface GetResponseUsers {
@@ -51,4 +60,10 @@ interface GetResponseUsers {
 
 interface GetResponseUsersForMatching {
   data: User[]
+}
+
+interface GetResponseUserImages {
+  _embedded: {
+    userImages: UserImages[]
+  }
 }

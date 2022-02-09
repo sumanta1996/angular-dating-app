@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { User } from './common/user';
+import { ConversationsService } from './services/conversations.service';
 import { RegistrationService } from './services/registration.service';
 import { ToasterNotifyService } from './services/toaster-notify.service';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -58,6 +60,8 @@ export class AppComponent {
       this.checkRedirectUrl();
     }
   }
+
+  
 
   checkRedirectUrl() {  
     if (this.imageData) {

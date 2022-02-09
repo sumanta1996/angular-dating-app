@@ -72,6 +72,12 @@ export class RegistrationComponent implements OnInit {
       user.company = this.regForm.controls['company'].value;
       user.schoolName = this.regForm.controls['schoolName'].value;
       user.livingIn = this.regForm.controls['livingIn'].value.code;
+      //By default choose the sexuality while register.
+      if(user.gender === 'M') {
+        user.sexuality = ConstantData.W;
+      }else {
+        user.sexuality = ConstantData.M;
+      }
       let regReq = new LoginUser(this.regForm.controls['emailId'].value,
                                 this.regForm.controls['username'].value,
                                 this.regForm.controls['password'].value,

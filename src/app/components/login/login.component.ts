@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
             this.route.navigateByUrl('/users');
           }else {
             //New User
-            this.route.navigateByUrl('/edit-profile')
+            this.route.navigateByUrl('/edit-profile');
           }
         },
         error => {

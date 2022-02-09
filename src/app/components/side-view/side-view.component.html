@@ -19,7 +19,18 @@
         </div>
     </div>
     <!-- Ui for 'Messages' i.e. i = 1 -->
-    <div *ngIf="activeIndex === 1">
-
+    <div *ngIf="activeIndex === 1" class="message-container">
+        <div *ngFor="let message of allMessages; let i=index" class="each-message-container"
+            (click)="openConversationScreenFromMessages(i, message.usernameSwiped, message.conversationId, message.matchedDate)"
+            [ngStyle]="activatedUsername === message.usernameSwiped? {'background-color': 'lightgray'}: {}">
+            <div class="image-container">
+                <img [src]="'data:image/jpeg;base64,'+message.imageData" class="image-fit-cover" />
+            </div>
+            <div class="profile-messages">
+                <span><b>{{message.firstName}}</b> {{message.age}}</span>
+                <span style="font-size: small;">{{message.message}}</span>
+            </div>
+            <div *ngIf="activatedUsername === message.usernameSwiped" class="vertical-bar"></div>
+        </div>
     </div>
 </div>
